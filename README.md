@@ -15,15 +15,15 @@ are added.
 
 ### 1. Home / Dashboard
 
-![ResuMatch Home Dashboard](docs/screenshots/home.png)
+<img width="1917" height="959" alt="DashBoard" src="https://github.com/user-attachments/assets/08b3f171-2be6-4351-8f3e-98f652502ddb" />
 
 ### 2. My Analyses
 
-![ResuMatch My Analyses](docs/screenshots/my-analyses.png)
+<img width="1917" height="959" alt="My Analisis" src="https://github.com/user-attachments/assets/7682dce9-2f8a-4b97-886e-cf216cd7f060" />
 
 ### 3. My Resumes
 
-![ResuMatch My Resumes](docs/screenshots/my-resumes.png)
+<img width="1917" height="959" alt="My Resume" src="https://github.com/user-attachments/assets/955da9a1-dfe2-489a-b046-f9e87d9226be" />
 
 ## Features
 
