@@ -189,8 +189,3 @@ configuration accordingly.
 
 Suggestions and improvements are welcome. For larger changes, open an
 issue first to discuss the proposed update.
-
-## License
-
-No license has been specified yet. Add a `LICENSE` file if you intend to
-distribute or reuse this project under a particular license.
