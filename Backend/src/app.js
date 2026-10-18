@@ -10,18 +10,26 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://resumatch-ai-two-kappa.vercel.app",
+];
+
 // CORS configuration
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://resumatch-ai-two-kappa.vercel.app",
-    ],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Origin not allowed by CORS"));
+    },
     credentials: true,
   })
 );
 
-// Request middleware
+// Parse request body and cookies
 app.use(express.json());
 app.use(cookieParser());
 
