@@ -10,6 +10,7 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [error, setError] = useState("");
@@ -18,16 +19,24 @@ export default function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
+
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       await registerUser(form);
-      navigate("/login", {
-        state: { message: "Account created! Please sign in." },
+
+      navigate("/verify-otp", {
+        state: { email: form.email.trim().toLowerCase() },
       });
     } catch (err) {
       setError(
-        err.response?.data?.message || "Registration failed. Please try again."
+        err.response?.data?.message ||
+          "Registration failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -41,7 +50,9 @@ export default function Register() {
           <div className="rounded-xl bg-blue-600 p-2.5 text-white">
             <FileText size={24} />
           </div>
-          <span className="text-2xl font-bold text-slate-900">ResuMatch</span>
+          <span className="text-2xl font-bold text-slate-900">
+            ResuMatch
+          </span>
         </Link>
 
         <h1 className="text-2xl font-bold text-slate-900">
@@ -62,7 +73,9 @@ export default function Register() {
               required
               autoComplete="name"
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, name: e.target.value })
+              }
               placeholder="Your name"
               className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
@@ -77,7 +90,9 @@ export default function Register() {
               required
               autoComplete="email"
               value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, email: e.target.value })
+              }
               placeholder="you@example.com"
               className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             />
@@ -101,8 +116,29 @@ export default function Register() {
             />
           </div>
 
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Confirm password
+            </label>
+            <input
+              type="password"
+              required
+              minLength={8}
+              autoComplete="new-password"
+              value={form.confirmPassword}
+              onChange={(e) =>
+                setForm({ ...form, confirmPassword: e.target.value })
+              }
+              placeholder="Re-enter your password"
+              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
           {error && (
-            <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 p-3 text-sm text-red-600"
+            >
               {error}
             </p>
           )}
@@ -112,14 +148,19 @@ export default function Register() {
             disabled={loading}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-60"
           >
-            {loading && <LoaderCircle size={18} className="animate-spin" />}
-            {loading ? "Creating account..." : "Create Account"}
+            {loading && (
+              <LoaderCircle size={18} className="animate-spin" />
+            )}
+            {loading ? "Sending verification code..." : "Create Account"}
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-slate-600">
           Already have an account?{" "}
-          <Link to="/login" className="font-semibold text-blue-600 hover:underline">
+          <Link
+            to="/login"
+            className="font-semibold text-blue-600 hover:underline"
+          >
             Sign in
           </Link>
         </p>

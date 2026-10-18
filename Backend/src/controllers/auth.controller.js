@@ -1,6 +1,6 @@
 
 import { registerUser } from "../services/auth.service.js";
-import { loginUser } from "../services/auth.service.js";
+import { loginUser,verifyEmailOtp, resendEmailOtp } from "../services/auth.service.js";
 import {
   refreshAccessToken,
   logoutSession,
@@ -14,6 +14,19 @@ export const register = async (req, res, next) => {
       success: true,
       message: "Account created successfully",
       user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyOtp = async (req, res, next) => {
+  try {
+    const result = await verifyEmailOtp(req.body);
+
+    return res.status(200).json({
+      success: true,
+      message: result.message,
     });
   } catch (error) {
     next(error);
@@ -89,6 +102,19 @@ export const logout = async (req, res, next) => {
     return res.json({
       success: true,
       message: "Logged out successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resendOtp = async (req, res, next) => {
+  try {
+    const result = await resendEmailOtp(req.body);
+
+    return res.status(200).json({
+      success: true,
+      message: result.message,
     });
   } catch (error) {
     next(error);

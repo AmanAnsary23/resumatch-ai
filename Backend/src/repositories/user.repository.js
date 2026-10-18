@@ -33,3 +33,10 @@ export const findUserById = (id) => {
     },
   });
 };
+
+export const markEmailAsVerified = (email) => {
+  return prisma.user.update({
+    where: { email },
+    data: { isEmailVerified: true },
+  });
+};

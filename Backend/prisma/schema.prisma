@@ -17,6 +17,17 @@ model User {
   sessions     Session[]
   resumes   Resume[]
   analyses  Analysis[]
+  isEmailVerified Boolean @default(false)
+}
+
+model EmailVerification {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  otpHash   String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+  lastSentAt DateTime @default(now())
 }
 
 model Session {

@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { registerSchema } from "../validators/auth.validator.js";
-import { register } from "../controllers/auth.controller.js";
-import { loginSchema } from "../validators/auth.validator.js";
-import { login } from "../controllers/auth.controller.js";
+import {
+  registerSchema,
+  loginSchema,
+  verifyOtpSchema,
+  resendOtpSchema,
+} from "../validators/auth.validator.js";
+import { login , verifyOtp, resendOtp , register } from "../controllers/auth.controller.js";
 import {
   refresh,
   logout,
@@ -50,6 +53,40 @@ router.get("/me", authenticate, (req, res) => {
     success: true,
     user: req.user,
   });
+});
+
+router.post("/verify-otp", (req, res, next) => {
+  const result = verifyOtpSchema.safeParse(req.body);
+
+  if (!result.success) {
+    return res.status(400).json({
+      success: false,
+      errors: result.error.issues.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+      })),
+    });
+  }
+
+  req.body = result.data;
+  return verifyOtp(req, res, next);
+});
+
+router.post("/resend-otp", (req, res, next) => {
+  const result = resendOtpSchema.safeParse(req.body);
+
+  if (!result.success) {
+    return res.status(400).json({
+      success: false,
+      errors: result.error.issues.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+      })),
+    });
+  }
+
+  req.body = result.data;
+  return resendOtp(req, res, next);
 });
 
 export default router;

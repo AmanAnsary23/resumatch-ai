@@ -38,3 +38,20 @@ export const getCurrentUser = async () => {
   const response = await api.get("/auth/me");
   return response.data;
 };
+
+export const verifyOtp = async ({ email, otp }) => {
+  const response = await api.post("/auth/verify-otp", {
+    email,
+    otp,
+  });
+
+  return response.data;
+};
+
+export const resendOtp = async ({ email }) => {
+  const response = await api.post("/auth/resend-otp", {
+    email,
+  });
+
+  return response.data;
+};
