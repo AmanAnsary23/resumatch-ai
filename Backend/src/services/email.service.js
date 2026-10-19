@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 export async function sendOtpEmail(email, otp) {
   try {
     await transporter.sendMail({
-      from: `"ResuMatch AI" <${process.env.SMTP_USER}>`,
+      from: `"ResuMatch AI" <${process.env.SMTP_FROM}>`,
       to: email,
       subject: "Verify your ResuMatch AI account",
       text: `Your verification OTP is ${otp}. It expires in 5 minutes.`,
