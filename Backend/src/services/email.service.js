@@ -1,12 +1,23 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT || 2525),
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+  connectionTimeout: 15000,
+  greetingTimeout: 15000,
+  socketTimeout: 20000,
+});
 
 export async function sendOtpEmail(email, otp) {
   try {
-    const { data, error } = await resend.emails.send({
-      from: "ResuMatch AI <onboarding@resend.dev>",
-      to: [email],
+    await transporter.sendMail({
+      from: `"ResuMatch AI" <${process.env.SMTP_USER}>`,
+      to: email,
       subject: "Verify your ResuMatch AI account",
       text: `Your verification OTP is ${otp}. It expires in 5 minutes.`,
       html: `
@@ -20,14 +31,12 @@ export async function sendOtpEmail(email, otp) {
       `,
     });
 
-    if (error) {
-      console.error("RESEND ERROR:", error);
-      throw new Error(error.message || "Unable to send verification email.");
-    }
-
-    console.log("OTP email sent successfully:", data?.id);
+    console.log("OTP email sent successfully");
   } catch (error) {
-    console.error("Email sending failed:", error.message);
+    console.error("Email sending failed:", {
+      code: error.code,
+      message: error.message,
+    });
     throw error;
   }
 }
