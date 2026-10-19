@@ -20,12 +20,20 @@ ResuMatch AI helps job seekers understand how well their resume matches a job de
 
 ### 4. Email OTP Verification
 
+<<<<<<< HEAD
 <!-- Add an OTP verification screenshot here when ready. -->
 <!-- Example: ![Email OTP Verification](docs/screenshots/email-otp-verification.png) -->
 
 **OTP email preview:**  
 <!-- Add a screenshot of the OTP email received in the inbox here. -->
 <!-- Example: ![OTP email](docs/screenshots/otp-email.png) -->
+=======
+<img width="1917" height="912" alt="image" src="https://github.com/user-attachments/assets/2976c25d-518c-4cb1-97a5-205bd1754fa4" />
+
+**OTP email preview:**  
+
+<img width="1500" height="312" alt="image" src="https://github.com/user-attachments/assets/909f6c5c-f74f-45c2-a282-6be804d8a773" />
+>>>>>>> 6f1c6ba7f0bd9c74b520a70d2966aa5418131216
 
 ## Features
 
